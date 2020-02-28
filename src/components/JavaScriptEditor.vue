@@ -10,7 +10,8 @@
         <v-icon large color="white">mdi-script-text</v-icon>
         <span class="white--text ml-2">JavaScript editor</span>
         <div class="flex-grow-1"></div>
-         <v-btn icon dark @click="clear">
+        <app-code-base :editor="editor" />
+        <v-btn icon dark @click="clear">
           <v-icon>mdi-eraser-variant</v-icon>
         </v-btn>
         <v-btn icon dark @click="close">
@@ -34,11 +35,12 @@
 <script>
 import {CANVAS} from '@/common/constants'
 import * as monaco from 'monaco-editor'
+import CodeBase from './CodeBase'
 
 export default {
   name: 'JavaScriptEditor',
-  props: {
-    options: Object
+  components: {
+    'app-code-base': CodeBase
   },
   data: function () {
     return {

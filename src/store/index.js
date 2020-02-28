@@ -5,6 +5,7 @@ import notification from './notification'
 import error from './error'
 import loading from './loading'
 import code from './code'
+import codeBase from './codeBase'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     notification,
     error,
     loading,
-    code
+    code,
+    codeBase
   },
   plugins: [
     createPersistedState({

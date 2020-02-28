@@ -1,7 +1,7 @@
 <template>
   <v-app hide-overlay>
     <v-app-bar app dark color="black">
-      <v-toolbar-title>Canvas Editor</v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">Canvas Editor</v-toolbar-title>
       <v-spacer />
       <v-btn icon @click="execute">
         <v-icon>mdi-play</v-icon>
