@@ -35,7 +35,7 @@
               <td v-if="isFullAccessCloudPermission">
                 <v-edit-dialog
                   :return-value.sync="item.name"
-                  @save="editCode(item.id, item.name)"
+                  @save="updateCodeName(item.id, item.name)"
                 >{{item.name}}
                   <template v-slot:input>
                     <v-text-field
@@ -48,7 +48,8 @@
               </td>
               <td v-else>{{ item.name }}</td>
               <td class="td-action-width ml-0 pl-0 mr-0 pr-0">
-                <v-icon small @click="restoreCode(item.id)" class="mr-2">mdi-cloud-upload</v-icon>
+                <v-icon v-if="isFullAccessCloudPermission" small @click="updateCode(item.id)" class="mr-2">mdi-cloud-upload</v-icon>
+                <v-icon small @click="restoreCode(item.id)" class="mr-2">mdi-cloud-download</v-icon>
                 <v-icon v-if="isFullAccessCloudPermission" small @click="deleteCode(item.id)">mdi-delete</v-icon>
               </td>
             </tr>
@@ -95,8 +96,16 @@ export default {
       this.$store.dispatch('setCode', code)
       this.$store.dispatch('saveCode', code)
     },
-    editCode (id, name) {
-      this.$store.dispatch('editCode', { id, name })
+    updateCodeName (id, name) {
+      this.$store.dispatch('updateCodeName', { id, name })
+    },
+    async updateCode (id) {
+      let result = await this.$confirm('Do you really want to update code?')
+      if (result) {
+        const code = this.editor.getValue()
+        this.$store.dispatch('setCode', code)
+        this.$store.dispatch('updateCode', { id, code })
+      }
     },
     async restoreCode (id) {
       let result = await this.$confirm('Do you really want to restore code?')
@@ -124,8 +133,8 @@ export default {
      height: 400px;
   }
   .td-action-width {
-    width: 50px;
-    min-width: 50px;
-    max-width: 50px;
+    width: 75px;
+    min-width: 75px;
+    max-width: 75px;
   }
 </style>

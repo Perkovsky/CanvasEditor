@@ -66,12 +66,25 @@ export default {
         throw error
       }
     },
-    async editCode ({commit}, payload) {
+    async updateCodeName ({commit}, payload) {
       commit('clearError')
       commit('setLoading', true)
       try {
         await fb.database().ref('codebase').child(payload.id).update({ name: payload.name })
         commit('setLoading', false)
+      } catch (error) {
+        commit('setLoading', false)
+        commit('setError', error)
+        throw error
+      }
+    },
+    async updateCode ({commit}, payload) {
+      commit('clearError')
+      commit('setLoading', true)
+      try {
+        await fb.database().ref('codebase').child(payload.id).update({ code: payload.code })
+        commit('setLoading', false)
+        commit('setNotification', 'Code has been updated!')
       } catch (error) {
         commit('setLoading', false)
         commit('setError', error)
@@ -89,7 +102,7 @@ export default {
               commit('setCode', result.code)
             }
             commit('setLoading', false)
-            //commit('setNotification', 'Code have been restored!')
+            //commit('setNotification', 'Code has been restored!')
           } catch (error) {
             commit('setLoading', false)
             commit('setError', error)
