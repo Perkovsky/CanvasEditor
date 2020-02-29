@@ -1,6 +1,29 @@
 <template>
   <v-app hide-overlay>
+    <v-navigation-drawer app v-model="drawer">
+      <v-list-item class="font-weight-light">
+        <v-list-item-content>
+          <v-list-item-title>
+          <v-icon color="black">mdi-eye</v-icon>
+            <span class="black--text ml-2">Quick Demo</span>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider></v-divider>
+      <v-list dense>
+        <v-list-item v-for="(item, index ) in items"
+          :key="index"
+          link 
+          @click="drawCode(item.id)">
+          <v-list-item-content>
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-app-bar app dark color="black">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="font-weight-light">Canvas Editor</v-toolbar-title>
       <v-spacer />
       <v-btn icon @click="execute">
@@ -43,7 +66,13 @@ export default {
     'app-error': Error,
     'app-java-script-editor': JavaScriptEditor
   },
+  data: () => ({
+    drawer: false
+  }),
   computed: {
+    items () {
+      return this.$store.getters.codeBase
+    },
     loading () {
       return this.$store.getters.loading
     },
@@ -55,6 +84,10 @@ export default {
     }
   },
   methods: {
+    drawCode (id) {
+      this.$store.dispatch('restoreCode', { id })
+      this.execute()
+    },
     execute () {
       this.erase()
       const code = this.$store.getters.code
@@ -66,6 +99,9 @@ export default {
       const context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
+  },
+  mounted () {
+    this.$store.dispatch('fetchCodeBase')
   }
 }
 </script>

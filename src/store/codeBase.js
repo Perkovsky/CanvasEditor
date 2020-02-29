@@ -89,7 +89,7 @@ export default {
               commit('setCode', result.code)
             }
             commit('setLoading', false)
-            commit('setNotification', 'Code have been restored!')
+            //commit('setNotification', 'Code have been restored!')
           } catch (error) {
             commit('setLoading', false)
             commit('setError', error)

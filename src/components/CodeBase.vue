@@ -115,9 +115,6 @@ export default {
     close () {
       this.dialog = false
     }
-  },
-  mounted () {
-    this.$store.dispatch('fetchCodeBase')
   }
 }
 </script>
