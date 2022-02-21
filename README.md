@@ -1,5 +1,8 @@
 # canvas-editor
 
+## Live Demo
+https://canvas-editor-online.web.app/
+
 ## Project setup
 ```
 npm install
